@@ -1,5 +1,6 @@
 #include "shapture.h"
 #include <string>
+#include <cstring>
 #include <pthread.h>
 
 struct sockaddr_in source, dest;
@@ -20,7 +21,8 @@ void Core::dcapture()
 {
 	int saddr_size, data_size;
 	struct sockaddr saddr;
-	char *interface = "enp2s0";
+	char *interface = new char[this->intf.size() + 1];
+    strcpy(interface,intf.c_str());
     int index = 0;
 
 	unsigned char *buffer = (unsigned char *)malloc(65536);	//Its Big!
@@ -656,8 +658,9 @@ std::string Core::PrintData(unsigned char *data, int Size)
     return std::string(tmp);
 }
 
-void Core::handle_switch(){
+void Core::handle_switch(std::string adpt){
     if (!this->running){
+        this->intf = adpt;
         this->running = true;
         this->start();
     }else{

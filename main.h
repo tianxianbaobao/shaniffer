@@ -14,7 +14,7 @@ public:
 
     std::vector<pack_dcp> vec;
 signals:
-    void switch_on_off();
+    void switch_on_off(std::string);
 public slots:
     void update(pack_dcp msg);
     void handle_on_off();

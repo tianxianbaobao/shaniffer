@@ -84,13 +84,14 @@ void mainWin::update(pack_dcp msg){
 }
 
 void mainWin::handle_on_off(){
+    std::string adpt = q2s(this->adp->text());
     if(this->running)
         this->on_off->setText("on");
     else 
         this->on_off->setText("off");
     this->running = !this->running;
 
-    emit switch_on_off();
+    emit switch_on_off(adpt);
 }
 
 void mainWin::handle_rowselection(int row, int col){
@@ -146,8 +147,8 @@ int main(int argc, char **argv){
     Core core;
     QObject::connect(&core, SIGNAL(newpack(pack_dcp)),
                      &sha, SLOT(update(pack_dcp)));
-    QObject::connect(&sha, SIGNAL(switch_on_off()),
-                     &core, SLOT(handle_switch()));
+    QObject::connect(&sha, SIGNAL(switch_on_off(std::string)),
+                     &core, SLOT(handle_switch(std::string)));
     sha.show();
     //core.start();
     return app.exec();

@@ -59,8 +59,9 @@ public:
 signals:
     void newpack(pack_dcp pd) const;
 public slots:
-    void handle_switch();
+    void handle_switch(std::string);
 private:
+    std::string intf;
     int running;
 };
 #endif
